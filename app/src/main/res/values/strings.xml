@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MarvelHeroesApp</string>
+    <string name="first_hero_name">Deadpool</string>
+    <string name="second_hero_name">Iron man</string>
+    <string name="third_hero_name">Spider man</string>
+    <string name="first_hero_text">Please don’t make the super\nsuit green... or animated!</string>
+    <string name="second_hero_text">I AM IRON MAN</string>
+    <string name="third_hero_text">In iron suit</string>
+    <string name="choose_text">Choose your hero</string>
 </resources>
