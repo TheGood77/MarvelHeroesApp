@@ -8,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,7 +23,7 @@ fun FirstScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .background(color = BackgroundColor)
-            .padding(vertical = 30.dp)
+            .padding(top = 32.dp)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     )
@@ -35,7 +34,7 @@ fun FirstScreen(navController: NavHostController) {
         )
         Text(
             modifier = Modifier
-                .padding(top = 54.dp, bottom = 82.dp),
+                .padding(top = 48.dp, bottom = 64.dp),
             text = stringResource(id = R.string.choose_text),
             style = InterTextExtraBold28,
             color = TextColor,

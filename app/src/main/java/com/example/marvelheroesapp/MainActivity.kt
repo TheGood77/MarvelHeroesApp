@@ -40,7 +40,7 @@ fun AppNavigation() {
             FirstScreen(navController)
         }
         composable("second_screen_route") {
-            // TODO("Second screen")
+            SecondScreen(navController)
         }
     }
 }

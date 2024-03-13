@@ -38,7 +38,7 @@ fun HeroCardComponent(navController: NavHostController) {
             Text(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(bottom = 40.dp, start = 28.dp),
+                    .padding(bottom = 32.dp, start = 32.dp),
                 text = stringResource(id = R.string.first_hero_name),
                 style = InterTextExtraBold32,
                 color = TextColor,
