@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
@@ -26,6 +25,8 @@ import com.example.marvelheroesapp.ui.theme.BackgroundColor
 import com.example.marvelheroesapp.ui.theme.InterTextBold22
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold34
 import com.example.marvelheroesapp.ui.theme.TextColor
+import com.example.marvelheroesapp.ui.theme.medium32
+import com.example.marvelheroesapp.ui.theme.small16
 
 @Composable
 fun SecondScreen(navController: NavHostController, heroModel: HeroModel) {
@@ -43,8 +44,8 @@ fun SecondScreen(navController: NavHostController, heroModel: HeroModel) {
         )
         Icon(
             modifier = Modifier
-                .padding(all = 16.dp)
-                .size(size = 32.dp)
+                .padding(all = small16)
+                .size(size = medium32)
                 .clickable { navController.navigateUp() },
             imageVector = Icons.Default.ArrowBack,
             contentDescription = "Back",
@@ -52,7 +53,7 @@ fun SecondScreen(navController: NavHostController, heroModel: HeroModel) {
         )
         Column(
             modifier = Modifier
-                .padding(start = 16.dp, bottom = 32.dp)
+                .padding(start = small16, bottom = medium32)
                 .align(Alignment.BottomStart),
         ) {
             Text(
@@ -62,7 +63,7 @@ fun SecondScreen(navController: NavHostController, heroModel: HeroModel) {
             )
             Text(
                 modifier = Modifier
-                    .padding(top = 16.dp),
+                    .padding(top = small16),
                 text = stringResource(id = heroModel.heroDesc),
                 style = InterTextBold22,
                 color = TextColor,

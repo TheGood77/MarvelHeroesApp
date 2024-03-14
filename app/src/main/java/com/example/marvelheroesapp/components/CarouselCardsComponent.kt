@@ -19,12 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.marvelheroesapp.R
 import com.example.marvelheroesapp.models.HeroModel.Companion.mockHeroList
 import com.example.marvelheroesapp.ui.theme.MarvelHeroesAppTheme
+import com.example.marvelheroesapp.ui.theme.large48
+import com.example.marvelheroesapp.ui.theme.small16
 import kotlin.math.abs
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -63,8 +64,8 @@ fun CarouselCardsComponent(navController: NavHostController) {
         LazyRow(
             modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically,
-            contentPadding = PaddingValues(horizontal = 48.dp),
-            horizontalArrangement = Arrangement.spacedBy(space = 16.dp),
+            contentPadding = PaddingValues(horizontal = large48),
+            horizontalArrangement = Arrangement.spacedBy(space = small16),
             state = state,
             flingBehavior = flingBehavior,
         ) {

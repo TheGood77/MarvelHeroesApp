@@ -14,20 +14,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.marvelheroesapp.models.HeroModel
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold32
 import com.example.marvelheroesapp.ui.theme.TextColor
+import com.example.marvelheroesapp.ui.theme.cardSizeHeight
+import com.example.marvelheroesapp.ui.theme.cardSizeWidth
+import com.example.marvelheroesapp.ui.theme.less10
+import com.example.marvelheroesapp.ui.theme.medium32
 
 @Composable
 fun HeroCardComponent(navController: NavHostController, heroModel: HeroModel) {
     Card(
         modifier = Modifier
-            .size(width = 300.dp, height = 550.dp)
-            .clip(shape = RoundedCornerShape(10.dp))
+            .size(width = cardSizeWidth, height = cardSizeHeight)
+            .clip(shape = RoundedCornerShape(less10))
             .clickable {
                 navController.navigate("second_screen_route/${heroModel.heroName}")
             }
@@ -41,7 +44,7 @@ fun HeroCardComponent(navController: NavHostController, heroModel: HeroModel) {
             Text(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(bottom = 32.dp, start = 32.dp),
+                    .padding(bottom = medium32, start = medium32),
                 text = stringResource(id = heroModel.heroName),
                 style = InterTextExtraBold32,
                 color = TextColor,

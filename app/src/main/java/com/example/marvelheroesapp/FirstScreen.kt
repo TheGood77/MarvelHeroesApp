@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
@@ -18,13 +17,16 @@ import com.example.marvelheroesapp.components.CarouselCardsComponent
 import com.example.marvelheroesapp.ui.theme.BackgroundColor
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold28
 import com.example.marvelheroesapp.ui.theme.TextColor
+import com.example.marvelheroesapp.ui.theme.huge64
+import com.example.marvelheroesapp.ui.theme.large48
+import com.example.marvelheroesapp.ui.theme.medium32
 
 @Composable
 fun FirstScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .background(color = BackgroundColor)
-            .padding(top = 32.dp)
+            .padding(top = medium32)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     )
@@ -35,7 +37,7 @@ fun FirstScreen(navController: NavHostController) {
         )
         Text(
             modifier = Modifier
-                .padding(top = 48.dp, bottom = 64.dp),
+                .padding(top = large48, bottom = huge64),
             text = stringResource(id = R.string.choose_text),
             style = InterTextExtraBold28,
             color = TextColor,
