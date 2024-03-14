@@ -21,13 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.example.marvelheroesapp.models.HeroModel
 import com.example.marvelheroesapp.ui.theme.BackgroundColor
 import com.example.marvelheroesapp.ui.theme.InterTextBold22
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold34
 import com.example.marvelheroesapp.ui.theme.TextColor
 
 @Composable
-fun SecondScreen(navController: NavHostController) {
+fun SecondScreen(navController: NavHostController, heroModel: HeroModel) {
     Box(
         modifier = Modifier
             .background(color = BackgroundColor)
@@ -36,33 +37,33 @@ fun SecondScreen(navController: NavHostController) {
     {
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
-            model = "https://iili.io/JMnAfIV.png",
+            model = heroModel.heroImageUrl,
             contentDescription = "Card image",
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
         )
         Icon(
+            modifier = Modifier
+                .padding(all = 16.dp)
+                .size(size = 32.dp)
+                .clickable { navController.navigateUp() },
             imageVector = Icons.Default.ArrowBack,
             contentDescription = "Back",
-            modifier = Modifier
-                .padding(16.dp)
-                .size(32.dp)
-                .clickable { navController.navigate("main_screen_route") },
             tint = TextColor,
         )
-        Column (
+        Column(
             modifier = Modifier
                 .padding(start = 16.dp, bottom = 32.dp)
                 .align(Alignment.BottomStart),
         ) {
             Text(
-                text = stringResource(id = R.string.first_hero_name),
+                text = stringResource(id = heroModel.heroName),
                 style = InterTextExtraBold34,
                 color = TextColor,
             )
             Text(
                 modifier = Modifier
                     .padding(top = 16.dp),
-                text = stringResource(id = R.string.first_hero_text),
+                text = stringResource(id = heroModel.heroDesc),
                 style = InterTextBold22,
                 color = TextColor,
             )
@@ -72,6 +73,6 @@ fun SecondScreen(navController: NavHostController) {
 
 @Preview(showBackground = true)
 @Composable
-fun SecondScreenPreview() {
-    SecondScreen(rememberNavController())
+private fun Preview() {
+    SecondScreen(rememberNavController(), HeroModel.mockHeroList.first())
 }

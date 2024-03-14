@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.example.marvelheroesapp.components.CarouselCardsComponent
 import com.example.marvelheroesapp.ui.theme.BackgroundColor
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold28
 import com.example.marvelheroesapp.ui.theme.TextColor
@@ -25,7 +26,7 @@ fun FirstScreen(navController: NavHostController) {
             .background(color = BackgroundColor)
             .padding(top = 32.dp)
             .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     )
     {
         AsyncImage(
