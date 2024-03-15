@@ -1,4 +1,4 @@
-package com.example.marvelheroesapp
+package com.example.marvelheroesapp.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,8 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.marvelheroesapp.models.HeroModel
 import com.example.marvelheroesapp.ui.theme.BackgroundColor
@@ -29,7 +27,7 @@ import com.example.marvelheroesapp.ui.theme.medium32
 import com.example.marvelheroesapp.ui.theme.small16
 
 @Composable
-fun SecondScreen(navController: NavHostController, heroModel: HeroModel) {
+fun SecondScreen(heroModel: HeroModel, upPress: () -> Unit) {
     Box(
         modifier = Modifier
             .background(color = BackgroundColor)
@@ -46,7 +44,7 @@ fun SecondScreen(navController: NavHostController, heroModel: HeroModel) {
             modifier = Modifier
                 .padding(all = small16)
                 .size(size = medium32)
-                .clickable { navController.navigateUp() },
+                .clickable { upPress() },
             imageVector = Icons.Default.ArrowBack,
             contentDescription = "Back",
             tint = TextColor,
@@ -75,5 +73,5 @@ fun SecondScreen(navController: NavHostController, heroModel: HeroModel) {
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    SecondScreen(rememberNavController(), HeroModel.mockHeroList.first())
+    SecondScreen(heroModel = HeroModel.mockHeroList.first(), upPress = {})
 }

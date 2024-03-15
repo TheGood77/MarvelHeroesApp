@@ -1,7 +1,7 @@
-package com.example.marvelheroesapp.components
+package com.example.marvelheroesapp.presentation.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.snapping.SnapLayoutInfoProvider
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
@@ -16,21 +16,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.marvelheroesapp.R
 import com.example.marvelheroesapp.models.HeroModel.Companion.mockHeroList
-import com.example.marvelheroesapp.ui.theme.MarvelHeroesAppTheme
+import com.example.marvelheroesapp.ui.theme.BackgroundFirstCardColor
+import com.example.marvelheroesapp.ui.theme.BackgroundSecondCardColor
+import com.example.marvelheroesapp.ui.theme.BackgroundThirdCardColor
 import com.example.marvelheroesapp.ui.theme.large48
 import com.example.marvelheroesapp.ui.theme.small16
 import kotlin.math.abs
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CarouselCardsComponent(navController: NavHostController) {
+fun CarouselCardsComponent(navigateToSecondScreen: (Int) -> Unit) {
 
     val state = rememberLazyListState()
     val snappingLayout = remember(state) { SnapLayoutInfoProvider(state) }
@@ -38,9 +38,9 @@ fun CarouselCardsComponent(navController: NavHostController) {
 
     val backgroundColors = remember {
         listOf(
-            R.drawable.first_state,
-            R.drawable.second_state,
-            R.drawable.third_state,
+            BackgroundFirstCardColor,
+            BackgroundSecondCardColor,
+            BackgroundThirdCardColor,
         )
     }
 
@@ -54,13 +54,19 @@ fun CarouselCardsComponent(navController: NavHostController) {
         }
     }
 
-    Box {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = backgroundColors[centerItemIndex]),
-            contentDescription = "Background color",
-            contentScale = ContentScale.Crop,
-        )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .drawBehind {
+                val path = Path().apply {
+                    moveTo(0f, size.height)
+                    lineTo(size.width, size.height)
+                    lineTo(size.width, size.height / 3f)
+                    close()
+                }
+                drawPath(path, backgroundColors[centerItemIndex])
+            }
+    ) {
         LazyRow(
             modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically,
@@ -71,7 +77,7 @@ fun CarouselCardsComponent(navController: NavHostController) {
         ) {
             items(count = mockHeroList.size) { index ->
                 HeroCardComponent(
-                    navController = navController,
+                    onClick = { heroId -> navigateToSecondScreen(heroId) },
                     heroModel = mockHeroList[index],
                 )
             }
@@ -81,8 +87,6 @@ fun CarouselCardsComponent(navController: NavHostController) {
 
 @Preview(showBackground = true)
 @Composable
-fun Preview() {
-    MarvelHeroesAppTheme {
-        CarouselCardsComponent(rememberNavController())
-    }
+private fun Preview() {
+    CarouselCardsComponent(navigateToSecondScreen = {})
 }

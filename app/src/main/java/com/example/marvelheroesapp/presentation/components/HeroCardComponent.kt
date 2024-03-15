@@ -1,4 +1,4 @@
-package com.example.marvelheroesapp.components
+package com.example.marvelheroesapp.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,8 +14,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.marvelheroesapp.models.HeroModel
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold32
@@ -26,13 +24,13 @@ import com.example.marvelheroesapp.ui.theme.less10
 import com.example.marvelheroesapp.ui.theme.medium32
 
 @Composable
-fun HeroCardComponent(navController: NavHostController, heroModel: HeroModel) {
+fun HeroCardComponent(onClick: (Int) -> Unit, heroModel: HeroModel) {
     Card(
         modifier = Modifier
             .size(width = cardSizeWidth, height = cardSizeHeight)
             .clip(shape = RoundedCornerShape(less10))
             .clickable {
-                navController.navigate("second_screen_route/${heroModel.heroName}")
+                onClick(heroModel.heroName)
             }
     ) {
         Box {
@@ -55,6 +53,6 @@ fun HeroCardComponent(navController: NavHostController, heroModel: HeroModel) {
 
 @Preview(showBackground = true)
 @Composable
-fun HeroCardComponentPreview() {
-    HeroCardComponent(rememberNavController(), HeroModel.mockHeroList.first())
+private fun Preview() {
+    HeroCardComponent(onClick = {}, heroModel = HeroModel.mockHeroList.first())
 }

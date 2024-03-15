@@ -1,4 +1,4 @@
-package com.example.marvelheroesapp
+package com.example.marvelheroesapp.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -10,10 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import com.example.marvelheroesapp.components.CarouselCardsComponent
+import com.example.marvelheroesapp.R
+import com.example.marvelheroesapp.presentation.components.CarouselCardsComponent
 import com.example.marvelheroesapp.ui.theme.BackgroundColor
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold28
 import com.example.marvelheroesapp.ui.theme.TextColor
@@ -22,7 +21,7 @@ import com.example.marvelheroesapp.ui.theme.large48
 import com.example.marvelheroesapp.ui.theme.medium32
 
 @Composable
-fun FirstScreen(navController: NavHostController) {
+fun FirstScreen(navigateToSecondScreen: (Int) -> Unit) {
     Column(
         modifier = Modifier
             .background(color = BackgroundColor)
@@ -42,12 +41,12 @@ fun FirstScreen(navController: NavHostController) {
             style = InterTextExtraBold28,
             color = TextColor,
         )
-        CarouselCardsComponent(navController)
+        CarouselCardsComponent(navigateToSecondScreen)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ScreenPreview() {
-    FirstScreen(rememberNavController())
+private fun Preview() {
+    FirstScreen(navigateToSecondScreen = {})
 }

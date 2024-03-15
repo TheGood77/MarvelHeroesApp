@@ -12,3 +12,6 @@ val Pink40 = Color(0xFF7D5260)
 
 val BackgroundColor = Color(0xFF2B272B)
 val TextColor = Color.White
+val BackgroundFirstCardColor = Color(0xFF991518)
+val BackgroundSecondCardColor = Color(0xFFA94446)
+val BackgroundThirdCardColor = Color(0xFF303AA1)
