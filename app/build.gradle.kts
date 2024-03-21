@@ -1,3 +1,11 @@
+import java.io.FileInputStream
+import java.util.Properties
+
+val apikeyPropertiesFile = rootProject.file("apikey.properties")
+val apikeyProperties = Properties().apply {
+    load(FileInputStream(apikeyPropertiesFile))
+}
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -17,6 +25,13 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+
+        buildConfigField("String", "PUBLIC_KEY", apikeyProperties.getProperty("PUBLIC_KEY"))
+        buildConfigField("String", "PRIVATE_KEY", apikeyProperties.getProperty("PRIVATE_KEY"))
+
+        buildFeatures {
+            buildConfig = true
         }
     }
 
@@ -50,7 +65,10 @@ android {
 }
 
 dependencies {
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.10.0")
+    implementation("com.squareup.retrofit2:retrofit:2.10.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
