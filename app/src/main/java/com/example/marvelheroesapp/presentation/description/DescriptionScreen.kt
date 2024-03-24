@@ -1,4 +1,4 @@
-package com.example.marvelheroesapp.presentation
+package com.example.marvelheroesapp.presentation.description
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,13 +12,18 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.marvelheroesapp.models.HeroModel
+import com.example.marvelheroesapp.R
+import com.example.marvelheroesapp.models.HeroCard
+import com.example.marvelheroesapp.models.HeroThumbnail
 import com.example.marvelheroesapp.ui.theme.BackgroundColor
 import com.example.marvelheroesapp.ui.theme.InterTextBold22
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold34
@@ -27,16 +32,36 @@ import com.example.marvelheroesapp.ui.theme.medium32
 import com.example.marvelheroesapp.ui.theme.small16
 
 @Composable
-fun SecondScreen(heroModel: HeroModel, upPress: () -> Unit) {
+fun DescriptionScreen(
+    descriptionViewModel: DescriptionViewModel = viewModel(),
+    heroId: Int,
+    upPress: () -> Unit,
+) {
+    val heroData = descriptionViewModel.hero.collectAsState()
+
+    LaunchedEffect(Unit) {
+        descriptionViewModel.getHeroById(heroId)
+    }
+
+    Description(
+        hero = heroData.value?.data?.results?.first(),
+        upPress = upPress,
+    )
+}
+
+@Composable
+private fun Description(
+    hero: HeroCard?,
+    upPress: () -> Unit = {},
+) {
     Box(
         modifier = Modifier
             .background(color = BackgroundColor)
             .fillMaxSize(),
-    )
-    {
+    ) {
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
-            model = heroModel.heroImageUrl,
+            model = hero?.getImageUrl(),
             contentDescription = "Card image",
             contentScale = ContentScale.Crop,
         )
@@ -55,14 +80,14 @@ fun SecondScreen(heroModel: HeroModel, upPress: () -> Unit) {
                 .align(Alignment.BottomStart),
         ) {
             Text(
-                text = stringResource(id = heroModel.heroName),
+                text = hero?.name ?: "",
                 style = InterTextExtraBold34,
                 color = TextColor,
             )
             Text(
                 modifier = Modifier
                     .padding(top = small16),
-                text = stringResource(id = heroModel.heroDesc),
+                text = hero?.description ?: "",
                 style = InterTextBold22,
                 color = TextColor,
             )
@@ -73,5 +98,16 @@ fun SecondScreen(heroModel: HeroModel, upPress: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    SecondScreen(heroModel = HeroModel.mockHeroList.first(), upPress = {})
+    val mockHero = HeroCard(
+        id = 0,
+        name = stringResource(id = R.string.first_hero_name),
+        description = stringResource(id = R.string.first_hero_text),
+        thumbnail = HeroThumbnail(
+            path = "",
+            extension = "",
+        ),
+    )
+    Description(
+        hero = mockHero,
+    )
 }
