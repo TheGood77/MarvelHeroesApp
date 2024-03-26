@@ -15,7 +15,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
-import com.example.marvelheroesapp.models.HeroModel
+import com.example.marvelheroesapp.R
+import com.example.marvelheroesapp.models.HeroCard
+import com.example.marvelheroesapp.models.HeroThumbnail
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold32
 import com.example.marvelheroesapp.ui.theme.TextColor
 import com.example.marvelheroesapp.ui.theme.cardSizeHeight
@@ -24,18 +26,19 @@ import com.example.marvelheroesapp.ui.theme.less10
 import com.example.marvelheroesapp.ui.theme.medium32
 
 @Composable
-fun HeroCardComponent(onClick: (Int) -> Unit, heroModel: HeroModel) {
+fun HeroCardComponent(onClick: (Int) -> Unit, heroModel: HeroCard) {
     Card(
         modifier = Modifier
             .size(width = cardSizeWidth, height = cardSizeHeight)
             .clip(shape = RoundedCornerShape(less10))
             .clickable {
-                onClick(heroModel.heroName)
+                onClick(heroModel.id)
             }
     ) {
         Box {
             AsyncImage(
-                model = heroModel.heroImageUrl,
+                modifier = Modifier.size(width = cardSizeWidth, height = cardSizeHeight),
+                model = heroModel.getImageUrl(),
                 contentDescription = "Card image",
                 contentScale = ContentScale.Crop,
             )
@@ -43,7 +46,7 @@ fun HeroCardComponent(onClick: (Int) -> Unit, heroModel: HeroModel) {
                 modifier = Modifier
                     .align(Alignment.BottomStart)
                     .padding(bottom = medium32, start = medium32),
-                text = stringResource(id = heroModel.heroName),
+                text = heroModel.name,
                 style = InterTextExtraBold32,
                 color = TextColor,
             )
@@ -54,5 +57,17 @@ fun HeroCardComponent(onClick: (Int) -> Unit, heroModel: HeroModel) {
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    HeroCardComponent(onClick = {}, heroModel = HeroModel.mockHeroList.first())
+    val mockHero = HeroCard(
+        id = 0,
+        name = stringResource(id = R.string.first_hero_name),
+        description = stringResource(id = R.string.first_hero_text),
+        thumbnail = HeroThumbnail(
+            path = "",
+            extension = "",
+        ),
+    )
+    HeroCardComponent(
+        onClick = {},
+        heroModel = mockHero
+    )
 }

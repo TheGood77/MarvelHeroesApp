@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.marvelheroesapp.models.HeroModel.Companion.mockHeroList
+import com.example.marvelheroesapp.models.HeroData
 import com.example.marvelheroesapp.ui.theme.BackgroundFirstCardColor
 import com.example.marvelheroesapp.ui.theme.BackgroundSecondCardColor
 import com.example.marvelheroesapp.ui.theme.BackgroundThirdCardColor
@@ -30,7 +30,10 @@ import kotlin.math.abs
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CarouselCardsComponent(navigateToSecondScreen: (Int) -> Unit) {
+fun CarouselCardsComponent(
+    heroData: HeroData? = null,
+    navigateToSecondScreen: (Int) -> Unit = {}
+) {
 
     val state = rememberLazyListState()
     val snappingLayout = remember(state) { SnapLayoutInfoProvider(state) }
@@ -54,6 +57,8 @@ fun CarouselCardsComponent(navigateToSecondScreen: (Int) -> Unit) {
         }
     }
 
+    val heroes = heroData?.data?.results
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -75,10 +80,10 @@ fun CarouselCardsComponent(navigateToSecondScreen: (Int) -> Unit) {
             state = state,
             flingBehavior = flingBehavior,
         ) {
-            items(count = mockHeroList.size) { index ->
+            items(count = heroes?.size ?: 0) { index ->
                 HeroCardComponent(
                     onClick = { heroId -> navigateToSecondScreen(heroId) },
-                    heroModel = mockHeroList[index],
+                    heroModel = heroes!![index] // TODO(remove !!, fix null-assertion)
                 )
             }
         }

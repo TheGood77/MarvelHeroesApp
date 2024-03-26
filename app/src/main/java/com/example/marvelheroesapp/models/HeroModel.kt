@@ -1,30 +1,40 @@
 package com.example.marvelheroesapp.models
 
-import androidx.annotation.StringRes
-import com.example.marvelheroesapp.R
+import androidx.annotation.Keep
+import com.squareup.moshi.JsonClass
 
-data class HeroModel(
-    val heroImageUrl: String,
-    @StringRes val heroName: Int,
-    @StringRes val heroDesc: Int,
+@Keep
+@JsonClass(generateAdapter = true)
+data class HeroData(
+    val code: Int,
+    val status: String,
+    val data: HeroResult,
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class HeroResult(
+    val results: List<HeroCard>,
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class HeroCard(
+    val id: Int,
+    val name: String,
+    val description: String,
+    val thumbnail: HeroThumbnail,
 ) {
-    companion object {
-        val mockHeroList = listOf(
-            HeroModel(
-                heroImageUrl = "https://iili.io/JMnAfIV.png",
-                heroName = R.string.first_hero_name,
-                heroDesc = R.string.first_hero_text
-            ),
-            HeroModel(
-                heroImageUrl = "https://iili.io/JMnuDI2.png",
-                heroName = R.string.second_hero_name,
-                heroDesc = R.string.second_hero_text
-            ),
-            HeroModel(
-                heroImageUrl = "https://iili.io/JMnuyB9.png",
-                heroName = R.string.third_hero_name,
-                heroDesc = R.string.third_hero_text
-            ),
-        )
+    fun getImageUrl(): String {
+        val basePath = thumbnail.path.replace("http", "https")
+        val extension = thumbnail.extension
+        return "$basePath.$extension"
     }
 }
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class HeroThumbnail(
+    val path: String,
+    val extension: String,
+)
