@@ -5,6 +5,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.math.BigInteger
 import java.security.MessageDigest
+
 class AuthInterceptor : Interceptor {
     private val md5 = MessageDigest.getInstance("MD5")
 

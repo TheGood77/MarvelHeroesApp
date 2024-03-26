@@ -1,6 +1,8 @@
 package com.example.marvelheroesapp.presentation.main
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,6 +18,7 @@ import coil.compose.AsyncImage
 import com.example.marvelheroesapp.R
 import com.example.marvelheroesapp.models.HeroData
 import com.example.marvelheroesapp.presentation.components.CarouselCardsComponent
+import com.example.marvelheroesapp.presentation.components.ErrorComponent
 import com.example.marvelheroesapp.ui.theme.BackgroundColor
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold28
 import com.example.marvelheroesapp.ui.theme.TextColor
@@ -30,10 +33,23 @@ fun MainScreen(
 ) {
     val heroes = mainViewModel.heroes.collectAsState()
 
-    HeroScreen(
-        heroData = heroes.value,
-        navigateToSecondScreen = navigateToSecondScreen,
-    )
+    val errorState = mainViewModel.errorState.collectAsState()
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        HeroScreen(
+            heroData = heroes.value,
+            navigateToSecondScreen = navigateToSecondScreen,
+        )
+
+        AnimatedVisibility(errorState.value != null) {
+            ErrorComponent(
+                modifier = Modifier.align(Alignment.Center),
+            )
+        }
+    }
 }
 
 @Composable

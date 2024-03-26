@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.marvelheroesapp.navigation.Destinations.MAIN_SCREEN
 import com.example.marvelheroesapp.navigation.Destinations.SECOND_SCREEN
+import com.example.marvelheroesapp.presentation.components.ErrorComponent
 import com.example.marvelheroesapp.presentation.description.DescriptionScreen
 import com.example.marvelheroesapp.presentation.main.MainScreen
 import com.example.marvelheroesapp.presentation.main.MainViewModel
@@ -40,7 +41,7 @@ fun AppNavigation(viewModel: MainViewModel = viewModel()) {
         composable(route = MAIN_SCREEN) {
             MainScreen(
                 mainViewModel = viewModel,
-                navigateToSecondScreen = actions.navigateToSecondScreen
+                navigateToSecondScreen = actions.navigateToSecondScreen,
             )
         }
         composable(
@@ -48,7 +49,14 @@ fun AppNavigation(viewModel: MainViewModel = viewModel()) {
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) { backStackEntry ->
             val heroId = backStackEntry.arguments?.getInt("id") ?: -1
-            DescriptionScreen(heroId = heroId, upPress = actions.upPress)
+            DescriptionScreen(
+                heroId = heroId,
+                upPress = actions.upPress,
+            )
         }
+    }
+
+    if (viewModel.errorState.value != null) {
+        ErrorComponent()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.marvelheroesapp.presentation.description
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,7 @@ import coil.compose.AsyncImage
 import com.example.marvelheroesapp.R
 import com.example.marvelheroesapp.models.HeroCard
 import com.example.marvelheroesapp.models.HeroThumbnail
+import com.example.marvelheroesapp.presentation.components.ErrorComponent
 import com.example.marvelheroesapp.ui.theme.BackgroundColor
 import com.example.marvelheroesapp.ui.theme.InterTextBold22
 import com.example.marvelheroesapp.ui.theme.InterTextExtraBold34
@@ -39,14 +41,27 @@ fun DescriptionScreen(
 ) {
     val heroData = descriptionViewModel.hero.collectAsState()
 
-    LaunchedEffect(Unit) {
-        descriptionViewModel.getHeroById(heroId)
-    }
+    val errorState = descriptionViewModel.errorState.collectAsState()
 
-    Description(
-        hero = heroData.value?.data?.results?.first(),
-        upPress = upPress,
-    )
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        LaunchedEffect(Unit) {
+            descriptionViewModel.getHeroById(heroId)
+        }
+
+        Description(
+            hero = heroData.value?.data?.results?.first(),
+            upPress = upPress,
+        )
+
+        AnimatedVisibility(errorState.value != null) {
+            ErrorComponent(
+                modifier = Modifier.align(Alignment.Center),
+            )
+        }
+    }
 }
 
 @Composable
